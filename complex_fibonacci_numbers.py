@@ -1,25 +1,27 @@
-import numpy as np
 import matplotlib.pyplot as plt
 
-golden = (1 + 5 ** 0.5) / 2
-numsP = []
-numsN = []
-for i in np.arange(0, 6, 0.00001):
-    i = float(i)
-    numsP.append((golden ** i - (-1 / golden) ** i) / 5 ** 0.5)
 
-for i in np.arange(-10, 0, 0.001):
-    i = float(i)
-    numsN.append((golden ** i - (-1 / golden) ** i) / 5 ** 0.5)
+numsP = []      # list for all numbers >= 0
+numsN = []      # list for all numbers <= 0
+start = -10
+stop = 10
+step = 0.001
+golden = (1 + 5 ** 0.5) / 2     # golden ratio
 
-print(numsN)
-print(numsP)
+# fill lists
+i = start
+while i <= stop:
+    if i >= 0:
+        numsP.append((golden ** i - (-1 / golden) ** i) / 5 ** 0.5)
+    if i <= 0:
+        numsN.append((golden ** i - (-1 / golden) ** i) / 5 ** 0.5)
+    i += step
 
-# ------------------------------------------------------------------- #
-
+# create a graph using matplotlib
 fig, (ax1, ax2) = plt.subplots(2, 1)
-
 plt.suptitle("Complex Fibonacci sequence")
+
+# upper plot for positive numbers
 plt.subplot(2, 1, 1)
 plt.xlabel("Real")
 plt.ylabel("Imaginary")
@@ -27,10 +29,11 @@ plt.grid(color='gray', linestyle=':')
 plt.axis('equal')
 plt.plot([x.real for x in numsP], [x.imag for x in numsP])
 
+# lower plot for negative numbers
 plt.subplot(2, 1, 2)
 plt.xlabel("Real")
 plt.ylabel("Imaginary")
-plt.grid(True, linestyle='-.')
+plt.grid(color='gray', linestyle=':')
 plt.axis('equal')
 plt.plot([x.real for x in numsN], [x.imag for x in numsN])
 plt.show()
